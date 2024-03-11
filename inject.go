@@ -180,7 +180,9 @@ func (r Reflection) hash() (Reflection, error) {
 	}
 	defer c.Reset()
 
-	result := Reflection{Suffix: fmt.Sprintf("%x", string(c.Sum(nil)))}
+	result := Reflection{
+		Suffix: fmt.Sprintf("%x", string(c.Sum(nil))),
+	}
 
 	return result, nil
 }
