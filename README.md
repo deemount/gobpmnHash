@@ -24,3 +24,4 @@ You can also test the idea behind it directly. Simply follow the link to the lab
 + [gobpmnDiagram](https://github.com/deemount/gobpmnDiagram)
 + [gobpmnBuilder](https://github.com/deemount/gobpmnBuilder)
 + [gobpmnCounter](https://github.com/deemount/gobpmnCounter)
++ [gobpmnReflection](https://github.com/deemount/gobpmnReflection)

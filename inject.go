@@ -8,27 +8,21 @@ import (
 	"strings"
 
 	"github.com/deemount/gobpmnHash/internals/utils"
-	"github.com/deemount/gobpmnModels/pkg/core"
 	gobpmn_reflection "github.com/deemount/gobpmnReflection"
 )
 
-type (
-	// Def ...
-	Def core.DefinitionsRepository
-
-	// Reflection ...
-	Reflection struct {
-		Suffix string
-	}
-)
+// Injection ...
+type Injection struct {
+	Suffix string
+}
 
 // Hash ...
-func (r *Reflection) Hash() string {
-	if r.Suffix == "" {
-		result, _ := r.hash()
-		r.Suffix = result.Suffix
+func (injection *Injection) Hash() string {
+	if injection.Suffix == "" {
+		result, _ := injection.hash()
+		injection.Suffix = result.Suffix
 	}
-	return r.Suffix
+	return injection.Suffix
 }
 
 // Inject itself reflects a given struct and inject
@@ -38,15 +32,16 @@ func (r *Reflection) Hash() string {
 // b) The struct has no anymous fields
 // It also counts the element in their specification to know
 // how much elements of each package needs to be mapped later then.
-func (r *Reflection) Inject(p interface{}) interface{} {
+func (injection *Injection) Inject(p interface{}) interface{} {
 
 	ref := gobpmn_reflection.NewReflect(p)
 	ref.Interface().Allocate().Maps().Call()
 
+	length := len(ref.Anonym)
+
 	switch true {
 	// anonymous fields are reflected
-	case len(ref.Anonym) > 0:
-		length := len(ref.Anonym)
+	case length > 0:
 
 		// create anonymMap and hashMap
 		anonymMap := make(map[int][]interface{}, length)
@@ -82,7 +77,7 @@ func (r *Reflection) Inject(p interface{}) interface{} {
 					// Means, only one process in a collaboration can be executed
 					// at runtime this can be changed in the future, if the engine
 					// fits for more execution options
-					hashSlice = r.injectConfig(name, i, hashSlice, n)
+					injection.injectConfig(name, i, hashSlice, n)
 
 				// kind is a struct
 				case reflect.Struct:
@@ -91,8 +86,8 @@ func (r *Reflection) Inject(p interface{}) interface{} {
 					// start to inject by each index of the given structs. Then,
 					// check next element, generate hash value and inject the field
 					// Suffix again
-					hashSlice = r.injectCurrentField(i, hashSlice, n)
-					hashSlice = r.injectNextField(i, hashSlice, n)
+					injection.injectCurrentField(i, hashSlice, n)
+					injection.injectNextField(i, hashSlice, n)
 
 				}
 
@@ -104,14 +99,14 @@ func (r *Reflection) Inject(p interface{}) interface{} {
 		}
 
 	// zero anonymous fields are reflected
-	case len(ref.Anonym) == 0:
+	case length == 0:
 
 		// walk through the map with names of reflection fields
 		for _, reflectionField := range ref.Rflct {
 			// get the reflected name of reflectionField
 			nonAnonymReflectionField := ref.Temporary.FieldByName(reflectionField)
 			// generate hash value and inject the field Suffix
-			hash, _ := r.hash()
+			hash, _ := injection.hash()
 			nonAnonymReflectionField.Set(reflect.ValueOf(hash))
 		}
 
@@ -136,7 +131,7 @@ func (r *Reflection) Inject(p interface{}) interface{} {
 // and calls it by the reflected method name.
 // This method hides specific setters (SetProcess, SetCollaboration, SetDiagram)
 // in the example process by building the model with reflection.
-func (r *Reflection) Create(p interface{}) {
+func (injection *Injection) Create(p interface{}) {
 	// el is the interface {}
 	el := reflect.ValueOf(&p).Elem()
 
@@ -164,23 +159,23 @@ func (r *Reflection) Create(p interface{}) {
 // and the hash/fnv package to generate a 32-bit FNV-1a hash.
 // If the error is not nil, it means that the hash value could not be generated.
 // The suffix is used to generate a unique ID for each element of a process.
-func (r Reflection) hash() (Reflection, error) {
+func (injection Injection) hash() (Injection, error) {
 
 	n := 8
 	b := make([]byte, n)
 	c := fnv.New32a()
 
 	if _, err := rand.Read(b); err != nil {
-		return Reflection{}, err
+		return Injection{}, err
 	}
 	s := fmt.Sprintf("%x", b)
 
 	if _, err := c.Write([]byte(s)); err != nil {
-		return Reflection{}, err
+		return Injection{}, err
 	}
 	defer c.Reset()
 
-	result := Reflection{
+	result := Injection{
 		Suffix: fmt.Sprintf("%x", string(c.Sum(nil))),
 	}
 
@@ -188,33 +183,30 @@ func (r Reflection) hash() (Reflection, error) {
 }
 
 // injectConfig sets the bool type.
-func (r *Reflection) injectConfig(name string, index int, slice []interface{}, field reflect.Value) []interface{} {
+func (injection *Injection) injectConfig(name string, index int, slice []interface{}, field reflect.Value) {
 	if strings.Contains(name, "IsExecutable") && index == 0 {
 		field.Field(0).SetBool(true)
 		slice[index] = bool(true)
 	} else {
 		slice[index] = bool(false)
 	}
-	return slice
 }
 
 // injectCurrentField injects the current field with a hash value
-func (r *Reflection) injectCurrentField(index int, slice []interface{}, field reflect.Value) []interface{} {
+func (injection *Injection) injectCurrentField(index int, slice []interface{}, field reflect.Value) {
 	strHash := fmt.Sprintf("%s", field.Field(index).FieldByName("Suffix"))
 	if strHash == "" {
-		hash, _ := r.hash()
+		hash, _ := injection.hash()
 		slice[index] = hash.Suffix
 		field.Field(index).Set(reflect.ValueOf(hash))
 	}
-	return slice
 }
 
 // injectNextField injects the next field with a hash value
-func (r *Reflection) injectNextField(index int, slice []interface{}, field reflect.Value) []interface{} {
+func (injection *Injection) injectNextField(index int, slice []interface{}, field reflect.Value) {
 	if index+1 < field.NumField() {
-		nexthash, _ := r.hash()
+		nexthash, _ := injection.hash()
 		slice[index+1] = nexthash.Suffix
 		field.Field(index + 1).Set(reflect.ValueOf(nexthash))
 	}
-	return slice
 }
