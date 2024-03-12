@@ -16,15 +16,6 @@ type Injection struct {
 	Suffix string
 }
 
-// Hash ...
-func (injection *Injection) Hash() string {
-	if injection.Suffix == "" {
-		result, _ := injection.hash()
-		injection.Suffix = result.Suffix
-	}
-	return injection.Suffix
-}
-
 // Inject itself reflects a given struct and inject
 // signed fields with hash values.
 // There are two conditions to assign fields of a struct:

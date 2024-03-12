@@ -1,6 +1,6 @@
-# gobpmnReflection
+# gobpmnHash
 
-A tool to reflect go code and build a process in Business Process Model Notation
+A tool for creating and distributing hash values to the reflected elements in a business process model created in Go
 
 **Note:** This repository is under construction
 
