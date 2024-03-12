@@ -25,8 +25,8 @@ type Injection struct {
 // how much elements of each package needs to be mapped later then.
 func (injection *Injection) Inject(p interface{}) interface{} {
 
-	ref := gobpmn_reflection.NewReflect(p)
-	ref.Interface().Allocate().Maps().Call()
+	ref := gobpmn_reflection.New(p)
+	ref.Interface().Allocate().Maps().Assign()
 
 	length := len(ref.Anonym)
 
