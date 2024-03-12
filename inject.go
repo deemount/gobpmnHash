@@ -136,7 +136,7 @@ func (injection *Injection) Create(p interface{}) {
 	collaboration.Call([]reflect.Value{})
 
 	process := definitions.MethodByName("SetProcess")
-	process.Call([]reflect.Value{reflect.ValueOf(2)}) // r.Process represents number of processes
+	process.Call([]reflect.Value{reflect.ValueOf(1)}) // r.Process represents number of processes
 
 	/*
 
