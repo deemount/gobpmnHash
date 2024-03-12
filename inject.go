@@ -138,8 +138,14 @@ func (injection *Injection) Create(p interface{}) {
 	process := definitions.MethodByName("SetProcess")
 	process.Call([]reflect.Value{reflect.ValueOf(2)}) // r.Process represents number of processes
 
-	diagram := definitions.MethodByName("SetDiagram")
-	diagram.Call([]reflect.Value{reflect.ValueOf(1)}) // 1 represents number of diagrams
+	/*
+
+		Actually, diagram is decoupled. So, no func needs to be called here ...
+
+		diagram := definitions.MethodByName("SetDiagram")
+		diagram.Call([]reflect.Value{reflect.ValueOf(1)}) // 1 represents number of diagrams
+
+	*/
 }
 
 /*
