@@ -131,9 +131,12 @@ func (injection *Injection) Create(p interface{}) {
 	definitions := reflect.New(el.Elem().Type()).Elem() // *core.Definitions
 	definitions.Set(el.Elem())                          // reflected process definitions el will be assigned to the core definitions
 
-	// set collaboration, process and diagram
-	collaboration := definitions.MethodByName("SetCollaboration")
-	collaboration.Call([]reflect.Value{})
+	/*
+		// set collaboration, process and diagram
+		collaboration := definitions.MethodByName("SetCollaboration")
+		collaboration.Call([]reflect.Value{})
+
+	*/
 
 	process := definitions.MethodByName("SetProcess")
 	process.Call([]reflect.Value{reflect.ValueOf(1)}) // r.Process represents number of processes
