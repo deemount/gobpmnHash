@@ -129,7 +129,9 @@ func (injection *Injection) Create(p interface{}) {
 	// Allocate a temporary variable with type of the struct.
 	// el.Elem() is the value contained in the interface
 	definitions := reflect.New(el.Elem().Type()).Elem() // *core.Definitions
-	definitions.Set(el.Elem())                          // reflected process definitions el will be assigned to the core definitions
+	definitionsAttributes := definitions.MethodByName("SetDefaultAttributes")
+	definitionsAttributes.Call([]reflect.Value{}) // r.Definitions represents the core definitions
+	definitions.Set(el.Elem())                    // reflected process definitions el will be assigned to the core definitions
 
 	/*
 		// set collaboration, process and diagram
