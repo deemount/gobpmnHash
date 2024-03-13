@@ -116,44 +116,6 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 
 }
 
-// Create receives the definitions repository by the app in p argument
-// and calls the main elements to set the maps, including process parameters
-// n of process. The method contains the reflected process definition (p interface{})
-// and calls it by the reflected method name.
-// This method hides specific setters (SetProcess, SetCollaboration, SetDiagram)
-// in the example process by building the model with reflection.
-func (injection *Injection) Create(p interface{}) {
-	// el is the interface {}
-	el := reflect.ValueOf(&p).Elem()
-
-	// Allocate a temporary variable with type of the struct.
-	// el.Elem() is the value contained in the interface
-	definitions := reflect.New(el.Elem().Type()).Elem() // *core.Definitions
-	definitions.Set(el.Elem())                          // reflected process definitions el will be assigned to the core definitions
-	definitionsAttributes := definitions.MethodByName("SetDefaultAttributes")
-
-	definitionsAttributes.Call([]reflect.Value{}) // r.Definitions represents the core definitions
-
-	/*
-		// set collaboration, process and diagram
-		collaboration := definitions.MethodByName("SetCollaboration")
-		collaboration.Call([]reflect.Value{})
-
-	*/
-
-	process := definitions.MethodByName("SetProcess")
-	process.Call([]reflect.Value{reflect.ValueOf(1)}) // r.Process represents number of processes
-
-	/*
-
-		Actually, diagram is decoupled. So, no func needs to be called here ...
-
-		diagram := definitions.MethodByName("SetDiagram")
-		diagram.Call([]reflect.Value{reflect.ValueOf(1)}) // 1 represents number of diagrams
-
-	*/
-}
-
 /*
  * @private
  */
