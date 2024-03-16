@@ -11,7 +11,7 @@ import (
 	gobpmn_reflection "github.com/deemount/gobpmnReflection"
 )
 
-// Injection ...
+// Injection contains the field Suffix, which holds the hash value for each field
 type Injection struct {
 	Suffix string
 }
@@ -19,10 +19,8 @@ type Injection struct {
 // Inject itself reflects a given struct and inject
 // signed fields with hash values.
 // There are two conditions to assign fields of a struct:
-// a) The struct has anonymous fields
+// a) The struct has anonymous fields or
 // b) The struct has no anymous fields
-// It also counts the element in their specification to know
-// how much elements of each package needs to be mapped later then.
 func (injection *Injection) Inject(p interface{}) interface{} {
 
 	ref := gobpmn_reflection.New(p)

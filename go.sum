@@ -1,2 +1,6 @@
-github.com/deemount/gobpmnReflection v0.0.0-20240312074456-8746db163823 h1:I9O9SXz0sHqwDdZOso8frhpw2wPaiAG+SioKn/jLXFY=
-github.com/deemount/gobpmnReflection v0.0.0-20240312074456-8746db163823/go.mod h1:NhbSOQE5lfqYvNkZXsm6xWTq3Wpy5xBPaERNqM/0OgI=
+github.com/deemount/gobpmnModels v0.0.0-20240316085912-7831ff39ffa4 h1:xAqg4ZIeMDxME0O8O4UpwpcS3AeXB+3IspauNX2G2AA=
+github.com/deemount/gobpmnModels v0.0.0-20240316085912-7831ff39ffa4/go.mod h1:bv2zkkqCzzaGV5gYP3gDQfMXuqjxMBjSl9GjHFo2mY8=
+github.com/deemount/gobpmnReflection v0.0.0-20240315112013-036495e4c08d h1:yQY4ikw/HuvVlPu3hGc0X8gntQnSbLqMnUw/nHRRCKU=
+github.com/deemount/gobpmnReflection v0.0.0-20240315112013-036495e4c08d/go.mod h1:j8WCmdzEkTq/FVsWJAdoPtjTiRryLZp/WjOLcIqtt5c=
+github.com/deemount/gobpmnTypes v0.0.0-20240315111519-43046016ad9f h1:0gux6KtY8XgrN/L9tiZ7B+wx3th7x4hBYu1+wtUkHYY=
+github.com/deemount/gobpmnTypes v0.0.0-20240315111519-43046016ad9f/go.mod h1:Dw7Jo8/vr0DzNHNMnbwQu0JSMWm2klNdo00rcxHCzJs=
