@@ -1,8 +1,10 @@
 package utils
 
-import "reflect"
-
-// MergeStringSliceToMap ...
+// MergeStringSliceToMap merges a string slice to a map
+// with a string key and a slice of interfaces. If the
+// key does not exist, it creates a new key-value pair.
+// If the key exists, it appends the slice to the existing
+// slice.
 func MergeStringSliceToMap(m map[string][]interface{}, k string, v []interface{}) {
 	if m[k] == nil {
 		m[k] = make([]interface{}, len(v))
@@ -11,19 +13,5 @@ func MergeStringSliceToMap(m map[string][]interface{}, k string, v []interface{}
 		}
 	} else {
 		m[k] = append(m[k], v...)
-	}
-}
-
-func MergeStructs(dst, src interface{}) {
-	dstVal := reflect.ValueOf(dst).Elem()
-	srcVal := reflect.ValueOf(src).Elem()
-
-	for i := 0; i < srcVal.NumField(); i++ {
-		srcField := srcVal.Field(i)
-		dstField := dstVal.FieldByName(srcVal.Type().Field(i).Name)
-
-		if dstField.IsValid() && dstField.CanSet() {
-			dstField.Set(srcField)
-		}
 	}
 }
