@@ -81,20 +81,22 @@ func TestInjectConfig(t *testing.T) {
 				assert.NotEqual(t, bool(false), p.IsExecutable)
 			}
 		})
-	t.Run("p(TestEmbeddedProcess{}).IsExecutable expected true", func(t *testing.T) {
-		hash := new(gobpmn_hash.Injection)
-		p := hash.Inject(TestEmbeddedProcess{}).(TestEmbeddedProcess)
-		if assert.NotNil(t, p) {
-			assert.Equal(t, bool(true), p.XYZIsExecutable)
-		}
-	})
-	t.Run("p(TestEmbeddedProcess{}).IsExecutable expected false", func(t *testing.T) {
-		hash := new(gobpmn_hash.Injection)
-		p := hash.Inject(TestEmbeddedProcess{}).(TestEmbeddedProcess)
-		if assert.NotNil(t, p) {
-			assert.NotEqual(t, bool(false), p.XYZIsExecutable)
-		}
-	})
+	t.Run("p(TestEmbeddedProcess{}).IsExecutable expected true",
+		func(t *testing.T) {
+			hash := new(gobpmn_hash.Injection)
+			p := hash.Inject(TestEmbeddedProcess{}).(TestEmbeddedProcess)
+			if assert.NotNil(t, p) {
+				assert.Equal(t, bool(true), p.XYZIsExecutable)
+			}
+		})
+	t.Run("p(TestEmbeddedProcess{}).IsExecutable expected false",
+		func(t *testing.T) {
+			hash := new(gobpmn_hash.Injection)
+			p := hash.Inject(TestEmbeddedProcess{}).(TestEmbeddedProcess)
+			if assert.NotNil(t, p) {
+				assert.NotEqual(t, bool(false), p.XYZIsExecutable)
+			}
+		})
 }
 
 func BenchmarkInject(b *testing.B) {
