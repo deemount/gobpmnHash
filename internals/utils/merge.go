@@ -8,9 +8,7 @@ package utils
 func MergeStringSliceToMap(m map[string][]interface{}, k string, v []interface{}) {
 	if m[k] == nil {
 		m[k] = make([]interface{}, len(v))
-		for i, s := range v {
-			m[k][i] = interface{}(s)
-		}
+		copy(m[k], v)
 	} else {
 		m[k] = append(m[k], v...)
 	}
