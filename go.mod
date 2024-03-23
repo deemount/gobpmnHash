@@ -3,7 +3,7 @@ module github.com/deemount/gobpmnHash
 go 1.22
 
 require (
-	github.com/deemount/gobpmnModels v0.0.0-20240316085912-7831ff39ffa4
+	github.com/deemount/gobpmnModels v0.0.0-20240322101529-ef7fa88e9769
 	github.com/deemount/gobpmnReflection v0.0.0-20240315112013-036495e4c08d
 	github.com/stretchr/testify v1.9.0
 )
