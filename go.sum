@@ -2,8 +2,12 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/deemount/gobpmnModels v0.0.0-20240322101529-ef7fa88e9769 h1:TtoUBKj5lgXUtbm1v5yrEmrb9DEtIVEKswqWHOiqp1k=
 github.com/deemount/gobpmnModels v0.0.0-20240322101529-ef7fa88e9769/go.mod h1:bv2zkkqCzzaGV5gYP3gDQfMXuqjxMBjSl9GjHFo2mY8=
+github.com/deemount/gobpmnModels v0.0.0-20240323202113-62f23350e68e h1:YOUPd7R1qRy35g30d7j8j4oZB2O4BYZmsLBSYM/wiCo=
+github.com/deemount/gobpmnModels v0.0.0-20240323202113-62f23350e68e/go.mod h1:heUauQw1Am5twPG32FQVdr6fFtfLE8wNkADX44YFSXA=
 github.com/deemount/gobpmnReflection v0.0.0-20240315112013-036495e4c08d h1:yQY4ikw/HuvVlPu3hGc0X8gntQnSbLqMnUw/nHRRCKU=
 github.com/deemount/gobpmnReflection v0.0.0-20240315112013-036495e4c08d/go.mod h1:j8WCmdzEkTq/FVsWJAdoPtjTiRryLZp/WjOLcIqtt5c=
+github.com/deemount/gobpmnReflection v0.0.0-20240323202924-de2a09a92ecf h1:4V/wr14oWWL3r/LasPPlVTAfu38rP7dTevD8X85A4Bg=
+github.com/deemount/gobpmnReflection v0.0.0-20240323202924-de2a09a92ecf/go.mod h1:i6Xabl5o2f8D32+IirY4bcPTsGRmCVxZM2DHOVtn9Do=
 github.com/deemount/gobpmnTypes v0.0.0-20240315111519-43046016ad9f h1:0gux6KtY8XgrN/L9tiZ7B+wx3th7x4hBYu1+wtUkHYY=
 github.com/deemount/gobpmnTypes v0.0.0-20240315111519-43046016ad9f/go.mod h1:Dw7Jo8/vr0DzNHNMnbwQu0JSMWm2klNdo00rcxHCzJs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
