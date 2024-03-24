@@ -1,6 +1,6 @@
 module github.com/deemount/gobpmnHash
 
-go 1.22
+go 1.22.1
 
 require (
 	github.com/deemount/gobpmnModels v0.0.0-20240322101529-ef7fa88e9769
