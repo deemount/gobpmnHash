@@ -90,22 +90,11 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 	// zero anonymous fields are reflected
 	case length == 0:
 
-		// walk through the map with names of reflection fields
-		for _, reflectionField := range ref.Rflct {
-			// get the reflected name of reflectionField
-			nonAnonymReflectionField := ref.Temporary.FieldByName(reflectionField)
-			// generate hash value and inject the field Suffix
-			hash, _ := injection.hash()
-			nonAnonymReflectionField.Set(reflect.ValueOf(hash))
-		}
+		// inject the non-anonymous fields with a hash value
+		// and set the field Suffix or a boolean value
+		injection.injectNonAnonymField(ref)
+		injection.injectNonAnonymConfig(ref)
 
-		// walk through the map with names of boolean fields
-		for _, configField := range ref.Config {
-			// get the reflected value of field
-			nonAnonymConfigField := ref.Temporary.FieldByName(configField)
-			// only the first field, which IsExecutable is set to true
-			nonAnonymConfigField.SetBool(true)
-		}
 	}
 
 	p = ref.Set()
@@ -171,5 +160,31 @@ func (injection *Injection) injectNextField(index int, slice []interface{}, fiel
 		nexthash, _ := injection.hash()
 		slice[index+1] = nexthash.Suffix
 		field.Field(index + 1).Set(reflect.ValueOf(nexthash))
+	}
+}
+
+// injectNonAnonymField injects the non-anonymous fields with a hash value
+func (injection *Injection) injectNonAnonymField(ref *gobpmn_reflection.Reflect) {
+	// walk through the map with names of reflection fields
+	for _, field := range ref.Rflct {
+		// get the reflected name of reflectionField
+		nonAnonymField := ref.Temporary.FieldByName(field)
+		// generate hash value and inject the field Suffix
+		hash, _ := injection.hash()
+		nonAnonymField.Set(reflect.ValueOf(hash))
+	}
+}
+
+// injectNonAnonymConfig injects the non-anonymous fields,
+// who are configuration fields, with a boolean value.
+// By default, the field IsExecutable is set to false and
+// if reflected the first field is set to true.
+func (injection *Injection) injectNonAnonymConfig(ref *gobpmn_reflection.Reflect) {
+	// walk through the map with names of boolean fields
+	for _, configField := range ref.Config {
+		// get the reflected value of field
+		nonAnonymConfigField := ref.Temporary.FieldByName(configField)
+		// only the first field, which IsExecutable is set to true
+		nonAnonymConfigField.SetBool(true)
 	}
 }
