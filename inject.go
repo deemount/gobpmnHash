@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"hash/fnv"
+	"log"
 	"reflect"
 	"strings"
 
@@ -14,6 +15,7 @@ import (
 // Injection contains the field Suffix, which holds the hash value for each field
 type Injection struct {
 	Suffix string
+	Type   string
 }
 
 // Inject itself reflects a given struct and inject
@@ -150,6 +152,7 @@ func (injection *Injection) injectCurrentField(index int, slice []interface{}, f
 	if strHash == "" {
 		hash, _ := injection.hash()
 		slice[index] = hash.Suffix
+		log.Printf("Slice: %v, Hash: %s", slice[index], hash.Suffix)
 		field.Field(index).Set(reflect.ValueOf(hash))
 	}
 }
