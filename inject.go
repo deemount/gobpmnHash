@@ -15,7 +15,6 @@ import (
 // Injection contains the field Suffix, which holds the hash value for each field
 type Injection struct {
 	Suffix string
-	Type   string
 }
 
 // Inject itself reflects a given struct and inject
@@ -77,6 +76,7 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 					// start to inject by each index of the given structs. Then,
 					// check next element, generate hash value and inject the field
 					// Suffix again
+					log.Printf("hashSlice %#v", hashSlice)
 					injection.injectCurrentField(i, hashSlice, n)
 					injection.injectNextField(i, hashSlice, n)
 
