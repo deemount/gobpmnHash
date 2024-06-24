@@ -77,7 +77,7 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 
 			}
 
-			log.Printf("%d, %s, %s", index, n.Type().Name(), n)
+			log.Printf("%d, %s, %#v", index, n.Type().Name(), n)
 			// merge the hashSlice with the hashMap
 			utils.MergeStringSliceToMap(hashMap, n.Type().Name(), hashSlice)
 
