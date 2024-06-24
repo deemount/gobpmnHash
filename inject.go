@@ -33,8 +33,7 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 	// anonymous fields are reflected
 	case length > 0:
 
-		// create anonymMap and hashMap
-		anonymMap := make(map[int][]interface{}, length)
+		// create hashMap
 		hashMap := make(map[string][]interface{}, length)
 
 		// walk through the map with names of anonymous fields
@@ -43,11 +42,7 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 			// get the reflected value of field
 			n := ref.Temporary.FieldByName(field)
 
-			// append to anonymMap the name of anonymous field
-			anonymMap[index] = append(anonymMap[index], n.Type().Name())
-
-			// create the field map and the hash slice
-			fieldMap := make(map[int][]interface{}, n.NumField())
+			// create the hash slice
 			hashSlice := make([]interface{}, n.NumField())
 
 			// walk through the values of fields assigned to the interface {}
@@ -55,12 +50,11 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 
 				// get the name of field and append to fieldMap the name of field
 				name := n.Type().Field(i).Name
-				fieldMap[i] = append(fieldMap[i], name)
 
-				// set by kind of reflected value above
+				// set by kind of reflected value by index above
 				switch n.Field(i).Kind() {
 
-				// kind is a bool
+				// if kind is a bool
 				case reflect.Bool:
 
 					// only the first field, which IsExecutable, is set to true.
@@ -69,14 +63,13 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 					// fits for more execution options
 					injection.injectConfig(name, i, hashSlice, n)
 
-				// kind is a struct
+				// if kind is a struct
 				case reflect.Struct:
 
 					// if the field Suffix is empty, generate hash value and
 					// start to inject by each index of the given structs. Then,
 					// check next element, generate hash value and inject the field
 					// Suffix again
-					log.Printf("hashSlice %#v", hashSlice)
 					injection.injectCurrentField(i, hashSlice, n)
 					injection.injectNextField(i, hashSlice, n)
 
@@ -84,6 +77,7 @@ func (injection *Injection) Inject(p interface{}) interface{} {
 
 			}
 
+			log.Printf("%d, %s, %s", index, n.Type().Name(), n)
 			// merge the hashSlice with the hashMap
 			utils.MergeStringSliceToMap(hashMap, n.Type().Name(), hashSlice)
 
@@ -152,7 +146,6 @@ func (injection *Injection) injectCurrentField(index int, slice []interface{}, f
 	if strHash == "" {
 		hash, _ := injection.hash()
 		slice[index] = hash.Suffix
-		log.Printf("Slice: %v, Hash: %s", slice[index], hash.Suffix)
 		field.Field(index).Set(reflect.ValueOf(hash))
 	}
 }
